@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Contact.css'; // Assuming you have a CSS file for styling
+import emailjs from 'emailjs-com';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -20,22 +21,28 @@ function Contact() {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    // Simulate form submission
-    try {
-      await new Promise((resolve) => setTimeout(resolve, 2000)); // Simulate API call
-      setSubmitStatus('success');
-      setFormData({ name: '', email: '', subject: '', message: '' });
-      // eslint-disable-next-line no-unused-vars
-    } catch (error) {
-      setSubmitStatus('error');
-    } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setSubmitStatus(''), 5000);
-    }
+    const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+    const templateId = import.meta.env.VITE_EMAILJS_TEMPLATE_ID;
+    const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+    emailjs
+      .send(serviceId, templateId, formData, publicKey)
+
+      .then(() => {
+        setSubmitStatus('success');
+        setFormData({ name: '', email: '', subject: '', message: '' });
+      })
+      .catch(() => {
+        setSubmitStatus('error');
+      })
+      .finally(() => {
+        setIsSubmitting(false);
+        setTimeout(() => setSubmitStatus(''), 5000);
+      });
   };
 
   return (
@@ -53,14 +60,14 @@ function Contact() {
           <div className="contact-method">
             <div className="icon">📧</div>
             <h3>Email Us</h3>
-            <p>hello@company.com</p>
+            <p>Marsyn.ai@gmail.com</p>
             <span>We'll respond within 24 hours</span>
           </div>
 
           <div className="contact-method">
             <div className="icon">📞</div>
             <h3>Call Us</h3>
-            <p>+1 (555) 123-4567</p>
+            <p>+91 123456779</p>
             <span>Mon-Fri from 9am to 5pm</span>
           </div>
 
@@ -68,7 +75,7 @@ function Contact() {
             <div className="icon">📍</div>
             <h3>Visit Us</h3>
             <p>123 Business Avenue</p>
-            <p>Suite 100, New York, NY 10001</p>
+            <p>Hitech City, HYD, IND 501510</p>
           </div>
         </div>
 
