@@ -651,16 +651,40 @@
 /* Notification */
 .notification {
   position: fixed;
-  bottom: 20px;
+  top: 20px;
   right: 20px;
+
   background: #27ae60;
-  color: white;
-  padding: 1rem 1.5rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-  z-index: 1000;
-  animation: slideInUp 0.3s ease;
+  color: #fff;
+
+  padding: 6px 12px;       /* very small height */
+  width: fit-content;      /* auto width based on text */
+  max-width: 220px;        /* prevent too long messages */
+  
+  border-radius: 5px;
+  font-size: 0.85rem;
+
+  display: flex;
+  align-items: center;
+
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  z-index: 9999;
+
+  animation: slideInDown 0.25s ease;
 }
+
+/* Slide from top animation */
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 
 @keyframes slideInUp {
   from {

@@ -453,9 +453,42 @@ function Blogs() {
           <div className="sidebar-widget">
             <h3>Follow Us</h3>
             <div className="social-links">
-              <button className="social-btn twitter">🐦 Twitter</button>
-              <button className="social-btn linkedin">💼 LinkedIn</button>
-              <button className="social-btn github">🐙 GitHub</button>
+              <button
+                className="social-btn twitter"
+                onClick={() =>
+                  window.open(
+                    'https://twitter.com/YourHandle',
+                    '_blank',
+                    'noopener,noreferrer'
+                  )
+                }
+              >
+                🐦 Twitter
+              </button>
+              <button
+                className="social-btn linkedin"
+                onClick={() =>
+                  window.open(
+                    'https://linkedin.com/in/ajay-mudettula',
+                    '_blank',
+                    'noopener,noreferrer'
+                  )
+                }
+              >
+                💼 LinkedIn
+              </button>
+              <button
+                className="social-btn github"
+                onClick={() =>
+                  window.open(
+                    'https://github.com/AjaySmarc',
+                    '_blank',
+                    'noopener,noreferrer'
+                  )
+                }
+              >
+                🐙 GitHub
+              </button>
             </div>
           </div>
         </aside>
