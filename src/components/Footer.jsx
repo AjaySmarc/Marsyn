@@ -1,71 +1,92 @@
 // Footer.jsx
 import './Footer.css';
+import { Link } from 'react-router-dom';
 
 function Footer() {
   return (
     <footer className="footer">
       <div className="footer-content">
+        {/* Company Info */}
         <div className="footer-section company-info">
           <h3 className="footer-logo">Marsyn</h3>
           <p className="footer-description">
             Powering modern businesses with friction-free, enterprise-grade AI
             solutions that deliver measurable growth.
           </p>
+
           <div className="social-links">
-            <a href="#" className="social-link">
+            <a
+              href="https://twitter.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
               Twitter
             </a>
-            <a href="#" className="social-link">
+            <a
+              href="https://linkedin.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
               LinkedIn
             </a>
-            <a href="#" className="social-link">
+            <a
+              href="https://facebook.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-link"
+            >
               Facebook
             </a>
           </div>
         </div>
 
+        {/* Quick Links */}
         <div className="footer-section">
           <h4>Quick Links</h4>
           <ul className="footer-links">
             <li>
-              <a href="Home">Home</a>
+              <Link to="/">Home</Link>
             </li>
             <li>
-              <a href="About">About</a>
+              <Link to="/about">About</Link>
             </li>
             <li>
-              <a href="Services">Services</a>
+              <Link to="/services">Services</Link>
             </li>
             <li>
-              <a href="Blogs">Blogs</a>
+              <Link to="/blogs">Blogs</Link>
             </li>
             <li>
-              <a href="Contact">Contact</a>
+              <Link to="/contact">Contact</Link>
             </li>
           </ul>
         </div>
 
+        {/* Services */}
         <div className="footer-section">
           <h4>Services</h4>
           <ul className="footer-links">
             <li>
-              <a href="#">AI Voice Agents</a>
+              <Link to="/services#voice-agents">AI Voice Agents</Link>
             </li>
             <li>
-              <a href="#">Lead Qualification</a>
+              <Link to="/services#lead-qualification">Lead Qualification</Link>
             </li>
             <li>
-              <a href="#">AI-Generated Media</a>
+              <Link to="/services#media">AI-Generated Media</Link>
             </li>
             <li>
-              <a href="#">AI Chatbots</a>
+              <Link to="/services#chatbots">AI Chatbots</Link>
             </li>
             <li>
-              <a href="#">Content Automation</a>
+              <Link to="/services#content">Content Automation</Link>
             </li>
           </ul>
         </div>
 
+        {/* Contact Info */}
         <div className="footer-section">
           <h4>Contact Info</h4>
           <div className="contact-info">
@@ -76,13 +97,15 @@ function Footer() {
         </div>
       </div>
 
+      {/* Footer Bottom */}
       <div className="footer-bottom">
         <div className="footer-bottom-content">
           <p>© {new Date().getFullYear()} Marsyn. All rights reserved.</p>
+
           <div className="footer-legal">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-            <a href="#">Cookie Policy</a>
+            <Link to="/privacy-policy">Privacy Policy</Link>
+            <Link to="/terms">Terms of Service</Link>
+            <Link to="/cookies">Cookie Policy</Link>
           </div>
         </div>
       </div>
