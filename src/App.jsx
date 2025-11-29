@@ -8,6 +8,7 @@ import Contact from './pages/Contact';
 import NotFound from './pages/NotFound';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
+import ScrollToHash from './components/ScrollToHash';
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
         <div className="floating-orb"></div>
         <div className="floating-orb"></div>
         <div className="floating-orb"></div>
+
+        <ScrollToHash />
 
         <Navbar />
         <div className="spacer">
