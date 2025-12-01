@@ -1,19 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
+import './Navbar.jsx';
 
 const Hero = () => {
-  const [scrollProgress, setScrollProgress] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
+  // const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
-    const handleScroll = () => {
-      const scrollY = window.scrollY;
-      const heroHeight = heroRef.current?.offsetHeight || 1000;
-      const progress = Math.min(scrollY / heroHeight, 1);
-      setScrollProgress(progress);
-    };
-
     const handleMouseMove = (e) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth) * 100,
@@ -21,236 +15,241 @@ const Hero = () => {
       });
     };
 
-    window.addEventListener('scroll', handleScroll);
     window.addEventListener('mousemove', handleMouseMove);
 
+    // Counter animation
+    const counters = document.querySelectorAll('.stat-number');
+    counters.forEach((counter) => {
+      const target = +counter.getAttribute('data-target');
+      const increment = target / 100;
+      let current = 0;
+
+      const updateCounter = () => {
+        if (current < target) {
+          current += increment;
+          counter.innerText = Math.ceil(current);
+          setTimeout(updateCounter, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+
+      updateCounter();
+    });
+
     return () => {
-      window.removeEventListener('scroll', handleScroll);
       window.removeEventListener('mousemove', handleMouseMove);
     };
   }, []);
 
-  const marsRotation = scrollProgress * 360;
-  // const marsScale = 1 + scrollProgress * 0.5;
-  const textOpacity = 1 - scrollProgress * 2;
+  // const tabs = [
+  //   { id: 'home', label: 'Home', icon: '🏠' },
+  //   { id: 'services', label: 'Services', icon: '⚡' },
+  //   { id: 'blogs', label: 'Blogs', icon: '📝' },
+  //   { id: 'shop', label: 'Shop', icon: '🛒' },
+  //   { id: 'about', label: 'About', icon: '👥' },
+  //   { id: 'contact', label: 'Contact', icon: '📞' },
+  // ];
+
+  const services = [
+    {
+      title: 'Web Development',
+      desc: 'Custom solutions for your business',
+      icon: '💻',
+    },
+    {
+      title: 'UI/UX Design',
+      desc: 'Beautiful, intuitive interfaces',
+      icon: '🎨',
+    },
+    {
+      title: 'Digital Marketing',
+      desc: 'Grow your online presence',
+      icon: '📈',
+    },
+    { title: 'Consulting', desc: 'Strategic technology advice', icon: '🤝' },
+  ];
+
+  const featuredBlogs = [
+    { title: 'Future of Web Development', readTime: '5 min', tag: 'Tech' },
+    { title: 'AI in Modern Business', readTime: '7 min', tag: 'AI' },
+    { title: 'Design Trends 2024', readTime: '4 min', tag: 'Design' },
+  ];
 
   return (
     <div className="hero-container" ref={heroRef}>
-      {/* Animated Background Elements */}
-      <div className="space-background">
-        <div className="stars"></div>
-        <div className="stars-small"></div>
-        <div className="nebula"></div>
-        <div className="galaxy"></div>
+      {/* Animated Background */}
+      <div className="professional-background">
+        <div className="grid-pattern"></div>
+        <div className="floating-shapes">
+          <div className="shape shape-1"></div>
+          <div className="shape shape-2"></div>
+          <div className="shape shape-3"></div>
+        </div>
+        <div className="gradient-overlay"></div>
       </div>
 
-      {/* Floating Asteroids */}
-      <div className="asteroid asteroid-1">💫</div>
-      <div className="asteroid asteroid-2">✨</div>
-      <div className="asteroid asteroid-3">⭐</div>
-      <div className="asteroid asteroid-4">🌟</div>
-
-      {/* Mars Planet System */}
-      <div className="solar-system">
-        <div className="orbit orbit-1"></div>
-        <div className="orbit orbit-2"></div>
-        <div className="orbit orbit-3"></div>
-
-        <div
-        // className="mars-planet"
-        // style={{
-        //   transform: `rotate(${marsRotation}deg) scale(${marsScale})`,
-        //   opacity: 0.8 + scrollProgress * 0.2,
-        // }}
-        >
-          <div className="planet-surface">
-            <div className="crater crater-1"></div>
-            <div className="crater crater-2"></div>
-            <div className="crater crater-3"></div>
-            <div className="crater crater-4"></div>
-            <div className="crater crater-5"></div>
-            <div className="mars-feature feature-1"></div>
-            <div className="mars-feature feature-2"></div>
+      {/* Main Content */}
+      <div className="hero-content">
+        <div className="welcome-section">
+          <div className="badge">
+            <span className="badge-dot"></span>
+            Welcome to Marsyn Digital
           </div>
-          <div className="planet-glow"></div>
-        </div>
 
-        {/* Mars Moons */}
-        <div
-          className="moon phobos"
-          style={{ transform: `rotate(${marsRotation * 2}deg)` }}
-        >
-          <div className="moon-surface"></div>
-        </div>
-        <div
-          className="moon deimos"
-          style={{ transform: `rotate(${marsRotation * 1.5}deg)` }}
-        >
-          <div className="moon-surface"></div>
-        </div>
-      </div>
+          <h1 className="main-heading">
+            Transform Your Digital
+            <span className="highlighted-text"> Presence</span>
+          </h1>
 
-      {/* Main Hero Content */}
-      <div
-        className="hero-content"
-        style={{
-          opacity: textOpacity,
-          transform: `translateY(${scrollProgress * 100}px)`,
-        }}
-      >
-        <div className="hero-badge">
-          <span className="badge-icon">🚀</span>
-          Welcome to the Future of Digital Innovation
-        </div>
-
-        <h1 className="hero-title">
-          <span className="title-line">Exploring the</span>
-          <span className="title-gradient">Digital Universe</span>
-          <span className="title-line">with Marsyn</span>
-        </h1>
-
-        <div className="typing-animation">
-          <p className="typing-text">
-            Where <span className="highlight">Code Meets Cosmos</span> and
-            Innovation Knows No Bounds
+          <p className="subheading">
+            We craft exceptional digital experiences that drive growth, enhance
+            engagement, and deliver measurable results for your business.
           </p>
-        </div>
 
-        <p className="hero-description">
-          We're pioneering the next generation of digital solutions, blending
-          cutting-edge technology with cosmic inspiration. Our mission is to
-          transform your digital presence into an interstellar experience that
-          captivates and converts.
-        </p>
-
-        {/* Interactive Stats */}
-        <div className="animated-stats">
-          <div className="stat-item">
-            <div className="stat-number" data-target="150">
-              0
-            </div>
-            <div className="stat-label">Projects Launched</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number" data-target="98">
-              0
-            </div>
-            <div className="stat-label">Success Rate</div>
-            <span className="stat-percent">%</span>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number" data-target="24">
-              0
-            </div>
-            <div className="stat-label">Innovation Hours</div>
-          </div>
-          <div className="stat-item">
-            <div className="stat-number" data-target="500">
-              0
-            </div>
-            <div className="stat-label">Satisfied Clients</div>
+          <div className="cta-group">
+            <button className="primary-btn">
+              <span className="btn-icon">🚀</span>
+              Start Project
+            </button>
+            <button className="secondary-btn">
+              <span className="btn-icon">▶</span>
+              Watch Demo
+            </button>
           </div>
         </div>
 
-        {/* Tech Stack Cloud */}
-        <div className="tech-cloud">
-          {[
-            'React',
-            'Node.js',
-            'Python',
-            'TypeScript',
-            'AWS',
-            'Docker',
-            'Kubernetes',
-            'TensorFlow',
-            'Three.js',
-            'GraphQL',
-            'MongoDB',
-            'PostgreSQL',
-          ].map((tech, index) => (
-            <span
-              key={tech}
-              className="tech-tag"
-              style={{
-                animationDelay: `${index * 0.2}s`,
-                transform: `translate(${(mousePosition.x - 50) * 0.1}px, ${
-                  (mousePosition.y - 50) * 0.1
-                }px)`,
-              }}
-            >
-              {tech}
-            </span>
-          ))}
+        {/* Quick Access Cards */}
+        <div className="quick-access-grid">
+          <div className="access-card">
+            <div className="card-icon">⚡</div>
+            <h3>Services</h3>
+            <p>Explore our comprehensive digital solutions</p>
+            <button className="card-cta">View Services →</button>
+          </div>
+
+          <div className="access-card">
+            <div className="card-icon">📝</div>
+            <h3>Blogs</h3>
+            <p>Latest insights & industry trends</p>
+            <button className="card-cta">Read Articles →</button>
+          </div>
+
+          <div className="access-card">
+            <div className="card-icon">🛒</div>
+            <h3>Shop</h3>
+            <p>Digital products & templates</p>
+            <button className="card-cta">Browse Shop →</button>
+          </div>
         </div>
 
-        {/* CTA Buttons */}
-        <div className="hero-actions">
-          <button className="cta-btn primary">
-            <span className="btn-glow"></span>
-            <span className="btn-icon">🌌</span>
-            Launch Project
-          </button>
-          <button className="cta-btn secondary">
-            <span className="btn-icon">📡</span>
-            Explore Galaxy
-          </button>
-          <button className="cta-btn outline">
-            <span className="btn-icon">🛰️</span>
-            View Orbit
-          </button>
+        {/* Stats Section */}
+        <div className="stats-section">
+          <div className="stat-card">
+            <div className="stat-value" data-target="250">
+              0
+            </div>
+            <div className="stat-label">Projects Delivered</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-value" data-target="98">
+              0
+            </div>
+            <div className="stat-label">Client Satisfaction</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-value" data-target="50">
+              0
+            </div>
+            <div className="stat-label">Team Experts</div>
+          </div>
+          <div className="stat-card">
+            <div className="stat-value" data-target="5">
+              0
+            </div>
+            <div className="stat-label">Years Experience</div>
+          </div>
         </div>
 
-        {/* Social Proof */}
-        <div className="social-proof">
-          <div className="client-logos">
-            {['NASA', 'SPACEX', 'BLUE ORIGIN', 'VIRGIN GALACTIC'].map(
-              (client) => (
-                <div key={client} className="client-logo">
-                  {client}
+        {/* Featured Services Preview */}
+        <div className="services-preview">
+          <h2 className="section-title">Our Core Services</h2>
+          <div className="services-grid">
+            {services.map((service, index) => (
+              <div
+                key={index}
+                className="service-card"
+                style={{
+                  transform: `translate(${(mousePosition.x - 50) * 0.05}px, ${
+                    (mousePosition.y - 50) * 0.05
+                  }px)`,
+                }}
+              >
+                <div className="service-icon">{service.icon}</div>
+                <h3>{service.title}</h3>
+                <p>{service.desc}</p>
+                <button className="service-link">Learn More →</button>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Latest Blogs Preview */}
+        <div className="blogs-preview">
+          <div className="section-header">
+            <h2 className="section-title">Latest from Our Blog</h2>
+            <button className="view-all">View All →</button>
+          </div>
+          <div className="blogs-grid">
+            {featuredBlogs.map((blog, index) => (
+              <div key={index} className="blog-card">
+                <div className="blog-tag">{blog.tag}</div>
+                <h3>{blog.title}</h3>
+                <div className="blog-meta">
+                  <span className="read-time">{blog.readTime} read</span>
+                  <span className="read-link">Read Article →</span>
                 </div>
-              )
-            )}
+              </div>
+            ))}
           </div>
-          <p className="proof-text">Trusted by interstellar pioneers</p>
+        </div>
+
+        {/* CTA Section */}
+        <div className="final-cta">
+          <h2>Ready to Transform Your Business?</h2>
+          <p>
+            Let's create something amazing together. Schedule a free
+            consultation today.
+          </p>
+          <div className="action-buttons">
+            <button className="contact-btn">
+              <span className="btn-icon">📞</span>
+              Contact Us
+            </button>
+            <button className="demo-btn">
+              <span className="btn-icon">🎬</span>
+              Book Demo
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* Scroll Indicator */}
-      <div className="cosmic-scroll-indicator">
-        <div className="scroll-orbit">
-          <div className="scroll-satellite"></div>
+      {/* Footer
+      <div className="hero-footer">
+        <div className="footer-content">
+          <div className="social-links">
+            {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map((platform) => (
+              <a key={platform} href="#" className="social-link">
+                {platform}
+              </a>
+            ))}
+          </div>
+          <div className="contact-info">
+            <p>hello@marsyn.com</p>
+            <p>+1 (555) 123-4567</p>
+          </div>
         </div>
-        <span className="scroll-text">Begin Cosmic Journey</span>
-      </div>
-
-      {/* Particle Effects */}
-      <div className="particles-container">
-        {Array.from({ length: 50 }).map((_, i) => (
-          <div
-            key={i}
-            className="particle"
-            style={{
-              left: `${Math.random() * 100}%`,
-              animationDelay: `${Math.random() * 5}s`,
-              animationDuration: `${3 + Math.random() * 7}s`,
-            }}
-          ></div>
-        ))}
-      </div>
-
-      {/* Audio Visualizer Effect */}
-      <div className="audio-waves">
-        {Array.from({ length: 20 }).map((_, i) => (
-          <div
-            key={i}
-            className="wave-bar"
-            style={{
-              animationDelay: `${i * 0.1}s`,
-              height: `${20 + Math.random() * 60}%`,
-            }}
-          ></div>
-        ))}
-      </div>
+      </div> */}
     </div>
   );
 };
