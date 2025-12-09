@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 import './Navbar.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
   // const [activeTab, setActiveTab] = useState('home');
@@ -222,7 +224,10 @@ const Hero = () => {
             consultation today.
           </p>
           <div className="action-buttons">
-            <button className="contact-btn">
+            <button
+              className="contact-btn"
+              onClick={() => navigate('/contact')}
+            >
               <span className="btn-icon">📞</span>
               Contact Us
             </button>
