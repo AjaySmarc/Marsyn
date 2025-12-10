@@ -2,11 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import './Hero.css';
 import './Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
+import BookDemo from '../pages/BookDemo';
 
 const Hero = () => {
   const navigate = useNavigate();
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const heroRef = useRef(null);
+  const [showDemo, setShowDemo] = useState(false);
   // const [activeTab, setActiveTab] = useState('home');
 
   useEffect(() => {
@@ -231,30 +233,24 @@ const Hero = () => {
               <span className="btn-icon">📞</span>
               Contact Us
             </button>
-            <button className="demo-btn">
-              <span className="btn-icon">🎬</span>
-              Book Demo
-            </button>
+            <div>
+              <button className="demo-btn" onClick={() => setShowDemo(true)}>
+                <span className="btn-icon">🎬</span>
+                Book Demo
+              </button>
+
+              {/* {showDemo && <BookDemo onClose={() => setShowDemo(false)} />}
+               */}
+              {showDemo && (
+                <BookDemo
+                  isOpen={showDemo}
+                  onClose={() => setShowDemo(false)}
+                />
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Footer
-      <div className="hero-footer">
-        <div className="footer-content">
-          <div className="social-links">
-            {['Twitter', 'LinkedIn', 'GitHub', 'Dribbble'].map((platform) => (
-              <a key={platform} href="#" className="social-link">
-                {platform}
-              </a>
-            ))}
-          </div>
-          <div className="contact-info">
-            <p>hello@marsyn.com</p>
-            <p>+1 (555) 123-4567</p>
-          </div>
-        </div>
-      </div> */}
     </div>
   );
 };
