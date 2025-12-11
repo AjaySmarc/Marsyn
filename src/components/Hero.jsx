@@ -129,21 +129,27 @@ const Hero = () => {
             <div className="card-icon">⚡</div>
             <h3>Services</h3>
             <p>Explore our comprehensive digital solutions</p>
-            <button className="card-cta">View Services →</button>
+            <button className="card-cta" onClick={() => navigate('/services')}>
+              View Services →
+            </button>
           </div>
 
           <div className="access-card">
             <div className="card-icon">📝</div>
             <h3>Blogs</h3>
             <p>Latest insights & industry trends</p>
-            <button className="card-cta">Read Articles →</button>
+            <button className="card-cta" onClick={() => navigate('/blogs')}>
+              Read Articles →
+            </button>
           </div>
 
           <div className="access-card">
             <div className="card-icon">🛒</div>
             <h3>Shop</h3>
             <p>Digital products & templates</p>
-            <button className="card-cta">Browse Shop →</button>
+            <button className="card-cta" onClick={() => navigate('/shop')}>
+              Browse Shop →
+            </button>
           </div>
         </div>
 
@@ -151,25 +157,25 @@ const Hero = () => {
         <div className="stats-section">
           <div className="stat-card">
             <div className="stat-value" data-target="250">
-              0
+              23
             </div>
             <div className="stat-label">Projects Delivered</div>
           </div>
           <div className="stat-card">
             <div className="stat-value" data-target="98">
-              0
+              90
             </div>
             <div className="stat-label">Client Satisfaction</div>
           </div>
           <div className="stat-card">
             <div className="stat-value" data-target="50">
-              0
+              24
             </div>
             <div className="stat-label">Team Experts</div>
           </div>
           <div className="stat-card">
             <div className="stat-value" data-target="5">
-              0
+              1
             </div>
             <div className="stat-label">Years Experience</div>
           </div>
