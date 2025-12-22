@@ -20,6 +20,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import './SocialMedia.css';
+import { Helmet } from 'react-helmet-async';
 
 const SocialMedia = () => {
   // Social media stats
@@ -156,6 +157,14 @@ const SocialMedia = () => {
 
   return (
     <div className="container">
+      <Helmet>
+        <title>Marsyn Social Media | Tech, AI & Startups</title>
+        <meta
+          name="description"
+          content="Explore Ajay's social media presence covering tech insights, AI innovations, startup journeys, and web development projects."
+        />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="heroSection">
         <div className="heroContent">
@@ -246,9 +255,7 @@ const SocialMedia = () => {
               )}
 
               {item.description && (
-                <div className="growthDescription">
-                  {item.description}
-                </div>
+                <div className="growthDescription">{item.description}</div>
               )}
             </div>
           ))}
@@ -337,9 +344,7 @@ const SocialMedia = () => {
         </div>
 
         <div className="collaborationCTA">
-          <button className="collaborateButton">
-            Let's Collaborate
-          </button>
+          <button className="collaborateButton">Let's Collaborate</button>
         </div>
       </section>
 
@@ -357,9 +362,7 @@ const SocialMedia = () => {
               </div>
               <p className="testimonialText">"{testimonial.text}"</p>
               <div className="testimonialFooter">
-                <span className="testimonialAuthor">
-                  {testimonial.author}
-                </span>
+                <span className="testimonialAuthor">{testimonial.author}</span>
                 <span className="testimonialPlatform">
                   {testimonial.platform}
                 </span>
@@ -372,9 +375,7 @@ const SocialMedia = () => {
       {/* Contact & Links */}
       <section className="section">
         <div className="contactSection">
-          <h2 className="contactTitle">
-            Let's Build Something Together
-          </h2>
+          <h2 className="contactTitle">Let's Build Something Together</h2>
 
           <div className="contactButtons">
             <a href="mailto:hello@ajay.com" className="contactButton">
@@ -420,9 +421,7 @@ const SocialMedia = () => {
 
           <div className="footer">
             <p>© {new Date().getFullYear()} Ajay. All rights reserved.</p>
-            <p className="footerSubtitle">
-              Digital Presence & Social Proof
-            </p>
+            <p className="footerSubtitle">Digital Presence & Social Proof</p>
           </div>
         </div>
       </section>

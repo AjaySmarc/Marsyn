@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import './Contact.css'; // Assuming you have a CSS file for styling
 import emailjs from 'emailjs-com';
+import { Helmet } from 'react-helmet-async';
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -47,6 +48,14 @@ function Contact() {
 
   return (
     <div className="contact-container">
+      <Helmet>
+        <title>Contact Marsyn | Inquiries, Support & Feedback</title>
+        <meta
+          name="description"
+          content="Reach out to the Marsyn team for questions, support, or feedback. Connect with us and get assistance for your AI workspace needs."
+        />
+      </Helmet>
+
       <div className="contact-hero">
         <h1>Get In Touch</h1>
         <p>

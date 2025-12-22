@@ -1,160 +1,119 @@
 import { useState } from 'react';
 import './Services.css';
+import { services, stats, processSteps } from '../data/serviceitems';
+import { Helmet } from 'react-helmet-async';
 
 function Services() {
   const [activeService, setActiveService] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [notification, setNotification] = useState('');
+  const [formStep, setFormStep] = useState(1); // For multi-step form
 
-  const services = [
-    {
-      id: 1,
-      icon: '🚀',
-      title: 'Web Development',
-      description:
-        'Custom web applications built with modern technologies like React, Node.js, and cloud infrastructure.',
-      features: [
-        'Responsive Design',
-        'SEO Optimization',
-        'Fast Performance',
-        'Scalable Architecture',
-      ],
-      price: 'Starting at $2,999',
-      duration: '4-6 weeks',
-      popular: true,
-    },
-    {
-      id: 2,
-      icon: '📱',
-      title: 'Mobile App Development',
-      description:
-        'Native and cross-platform mobile applications for iOS and Android with seamless user experience.',
-      features: [
-        'iOS & Android',
-        'Cross-Platform',
-        'App Store Deployment',
-        'Push Notifications',
-      ],
-      price: 'Starting at $4,999',
-      duration: '6-8 weeks',
-    },
-    {
-      id: 3,
-      icon: '🛠️',
-      title: 'UI/UX Design',
-      description:
-        'Beautiful and intuitive user interfaces that enhance user engagement and conversion rates.',
-      features: [
-        'User Research',
-        'Wireframing',
-        'Prototyping',
-        'Design Systems',
-      ],
-      price: 'Starting at $1,999',
-      duration: '2-4 weeks',
-    },
-    {
-      id: 4,
-      icon: '☁️',
-      title: 'Cloud Solutions',
-      description:
-        'Scalable cloud infrastructure and deployment solutions using AWS, Azure, and Google Cloud.',
-      features: [
-        'Cloud Migration',
-        'Serverless Architecture',
-        'DevOps Setup',
-        '24/7 Monitoring',
-      ],
-      price: 'Starting at $3,499',
-      duration: '3-5 weeks',
-    },
-    {
-      id: 5,
-      icon: '🔍',
-      title: 'Digital Marketing',
-      description:
-        'Comprehensive digital marketing strategies to boost your online presence and drive growth.',
-      features: [
-        'SEO Optimization',
-        'Social Media Marketing',
-        'Content Strategy',
-        'Analytics',
-      ],
-      price: 'Starting at $1,499/mo',
-      duration: 'Ongoing',
-    },
-    {
-      id: 6,
-      icon: '⚡',
-      title: 'Consulting',
-      description:
-        'Expert technology consulting to help you make informed decisions and optimize your digital strategy.',
-      features: [
-        'Technical Audit',
-        'Strategy Planning',
-        'Team Training',
-        'Ongoing Support',
-      ],
-      price: '$150/hour',
-      duration: 'Flexible',
-    },
-  ];
-
-  const stats = [
-    { number: '150+', label: 'Projects Completed' },
-    { number: '50+', label: 'Happy Clients' },
-    { number: '99%', label: 'Client Satisfaction' },
-    { number: '24/7', label: 'Support Available' },
-  ];
-
-  const showNotification = (message) => {
-    setNotification(message);
+  const showNotification = (message, type = 'success') => {
+    setNotification({ message, type });
     setTimeout(() => setNotification(''), 4000);
   };
 
-  const handleInquiry = (service) => {
+  const handleServiceInquiry = (service) => {
     setSelectedService(service);
+    setFormStep(1);
     setIsModalOpen(true);
-    showNotification(
-      `📧 Inquiry sent for ${service.title}! We'll contact you soon.`
-    );
+  };
+
+  const handleScheduleDemo = (service) => {
+    setSelectedService(service);
+    setFormStep(3); // Jump to scheduling step
+    setIsModalOpen(true);
+  };
+
+  const handleViewDetails = (service) => {
+    setActiveService(activeService === service.id ? null : service.id);
   };
 
   const handleContactSubmit = (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData);
-    console.log('Contact Form Data:', data);
 
-    // Simulate form submission
+    console.log('Service Inquiry:', {
+      ...data,
+      service: selectedService?.title,
+    });
+
+    // Simulate API call
     setTimeout(() => {
       setIsModalOpen(false);
       showNotification(
-        "🎉 Thank you! We've received your inquiry and will contact you within 24 hours."
+        `🎉 Thank you for your interest in ${selectedService?.title}! We'll contact you within 24 hours.`,
+        'success'
       );
       e.target.reset();
+      setSelectedService(null);
+      setFormStep(1);
+    }, 1500);
+  };
+
+  const handleScheduleSubmit = (e) => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const data = Object.fromEntries(formData);
+
+    console.log('Demo Scheduled:', {
+      ...data,
+      service: selectedService?.title,
+    });
+
+    // Simulate API call
+    setTimeout(() => {
+      setIsModalOpen(false);
+      showNotification(
+        `✅ Demo scheduled for ${selectedService?.title}! Calendar invite sent to your email.`,
+        'success'
+      );
+      e.target.reset();
+      setSelectedService(null);
+      setFormStep(1);
     }, 1500);
   };
 
   return (
     <div className="services-container">
+      <Helmet>
+        <title>Marsyn Services | Web, Mobile & AI Solutions</title>
+        <meta
+          name="description"
+          content="Explore Marsyn's professional software development, UI/UX design, and AI-powered solutions for startups and businesses."
+        />
+      </Helmet>
+
       {/* Hero Section */}
       <section className="services-hero">
         <div className="hero-content">
-          <h1 className="hero-title">
-            Transform Your <span className="highlight">Digital Presence</span>
-          </h1>
-          <p className="hero-subtitle">
-            We deliver cutting-edge digital solutions that drive growth, enhance
-            user experience, and transform your business for the modern era.
+          <div className="badge">Professional Services</div>
+          <h1>Transform Your Digital Vision Into Reality</h1>
+          <p className="subtitle">
+            Expert software development and design services tailored to drive
+            your business growth. From concept to deployment, I deliver
+            solutions that work.
           </p>
-          <div className="hero-buttons">
+          <div className="hero-stats">
+            {stats.map((stat, index) => (
+              <div key={index} className="stat-item">
+                <div className="stat-icon">{stat.icon}</div>
+                <div>
+                  <div className="stat-number">{stat.number}</div>
+                  <div className="stat-label">{stat.label}</div>
+                </div>
+              </div>
+            ))}
+          </div>
+          <div className="hero-actions">
             <button
               className="btn-primary"
               onClick={() =>
                 document
-                  .getElementById('services-grid')
+                  .getElementById('services')
                   .scrollIntoView({ behavior: 'smooth' })
               }
             >
@@ -164,59 +123,53 @@ function Services() {
               className="btn-secondary"
               onClick={() => setIsModalOpen(true)}
             >
-              Get Free Consultation
+              Book Consultation
             </button>
           </div>
         </div>
         <div className="hero-visual">
-          <div className="floating-elements">
-            <div className="floating-element element-1">🚀</div>
-            <div className="floating-element element-2">📱</div>
-            <div className="floating-element element-3">⚡</div>
-            <div className="floating-element element-4">🎨</div>
+          <div className="code-snippet">
+            <pre>
+              <code>
+                {`// Your solution awaits
+const project = {
+  expertise: ['React', 'Node.js', 'AWS'],
+  delivery: 'On Time',
+  quality: 'Top Tier',
+  support: '24/7'
+};`}
+              </code>
+            </pre>
           </div>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="stats-section">
-        <div className="stats-grid">
-          {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="stat-card"
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-            >
-              <h3 className="stat-number">{stat.number}</h3>
-              <p className="stat-label">{stat.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
       {/* Services Grid */}
-      <section id="services-grid" className="services-grid-section">
+      <section id="services" className="services-section">
         <div className="section-header">
-          <h2>Our Premium Services</h2>
-          <p>Comprehensive digital solutions tailored to your business needs</p>
+          <h2>My Services</h2>
+          <p>
+            Comprehensive digital solutions designed to solve real business
+            challenges
+          </p>
         </div>
 
         <div className="services-grid">
-          {services.map((service, index) => (
+          {services.map((service) => (
             <div
               key={service.id}
-              className={`service-card ${service.popular ? 'popular' : ''}`}
-              data-aos="fade-up"
-              data-aos-delay={index * 100}
-              onMouseEnter={() => setActiveService(service.id)}
-              onMouseLeave={() => setActiveService(null)}
+              className={`service-card ${service.popular ? 'featured' : ''}`}
             >
               {service.popular && (
-                <div className="popular-badge">Most Popular</div>
+                <div className="popular-badge">Most Requested</div>
               )}
 
-              <div className="service-icon">{service.icon}</div>
+              <div className="service-header">
+                <div className="service-icon-circle">
+                  <span className="icon">{service.icon}</span>
+                </div>
+                <span className="service-category">{service.category}</span>
+              </div>
 
               <h3 className="service-title">{service.title}</h3>
               <p className="service-description">{service.description}</p>
@@ -224,26 +177,32 @@ function Services() {
               <div className="service-features">
                 {service.features.map((feature, idx) => (
                   <span key={idx} className="feature-tag">
-                    ✓ {feature}
+                    {feature}
                   </span>
                 ))}
               </div>
 
-              <div className="service-meta">
-                <div className="price">{service.price}</div>
-                <div className="duration">⏱️ {service.duration}</div>
+              <div className="service-details">
+                <div className="price-info">
+                  <span className="price-label">Investment</span>
+                  <span className="price">{service.price}</span>
+                </div>
+                <div className="duration-info">
+                  <span className="duration-label">Timeline</span>
+                  <span className="duration">{service.duration}</span>
+                </div>
               </div>
 
               <div className="service-actions">
                 <button
                   className="btn-outline"
-                  onClick={() => setActiveService(service.id)}
+                  onClick={() => handleViewDetails(service)}
                 >
-                  Learn More
+                  {activeService === service.id ? 'Show Less' : 'View Details'}
                 </button>
                 <button
                   className="btn-primary"
-                  onClick={() => handleInquiry(service)}
+                  onClick={() => handleServiceInquiry(service)}
                 >
                   Get Quote
                 </button>
@@ -251,21 +210,31 @@ function Services() {
 
               {/* Expanded Details */}
               {activeService === service.id && (
-                <div className="service-expanded" data-aos="fade-down">
+                <div className="service-expanded">
                   <div className="expanded-content">
-                    <h4>What's Included:</h4>
-                    <ul>
-                      <li>Detailed project analysis and planning</li>
-                      <li>Regular progress updates and demos</li>
-                      <li>Quality assurance and testing</li>
-                      <li>Post-launch support and maintenance</li>
+                    <h4>What You'll Get:</h4>
+                    <ul className="deliverables-list">
+                      {service.deliverables.map((item, idx) => (
+                        <li key={idx}>
+                          <span className="check-icon">✓</span>
+                          {item}
+                        </li>
+                      ))}
                     </ul>
-                    <button
-                      className="btn-contact"
-                      onClick={() => handleInquiry(service)}
-                    >
-                      Start Project
-                    </button>
+                    <div className="expanded-actions">
+                      <button
+                        className="btn-secondary"
+                        onClick={() => handleScheduleDemo(service)}
+                      >
+                        Schedule Demo
+                      </button>
+                      <button
+                        className="btn-primary"
+                        onClick={() => handleServiceInquiry(service)}
+                      >
+                        Start Project
+                      </button>
+                    </div>
                   </div>
                 </div>
               )}
@@ -277,71 +246,58 @@ function Services() {
       {/* Process Section */}
       <section className="process-section">
         <div className="section-header">
-          <h2>Our Working Process</h2>
-          <p>Streamlined approach to deliver exceptional results</p>
+          <h2>How I Work</h2>
+          <p>A transparent, collaborative process designed for success</p>
         </div>
 
-        <div className="process-steps">
-          <div className="process-step" data-aos="fade-right">
-            <div className="step-number">01</div>
-            <h3>Discovery & Planning</h3>
-            <p>
-              We analyze your requirements and create a detailed project roadmap
-            </p>
-          </div>
-
-          <div
-            className="process-step"
-            data-aos="fade-right"
-            data-aos-delay="100"
-          >
-            <div className="step-number">02</div>
-            <h3>Design & Development</h3>
-            <p>
-              Our team creates stunning designs and robust technical solutions
-            </p>
-          </div>
-
-          <div
-            className="process-step"
-            data-aos="fade-right"
-            data-aos-delay="200"
-          >
-            <div className="step-number">03</div>
-            <h3>Testing & Quality Assurance</h3>
-            <p>
-              Rigorous testing ensures flawless performance across all devices
-            </p>
-          </div>
-
-          <div
-            className="process-step"
-            data-aos="fade-right"
-            data-aos-delay="300"
-          >
-            <div className="step-number">04</div>
-            <h3>Launch & Support</h3>
-            <p>
-              We deploy your solution and provide ongoing maintenance support
-            </p>
-          </div>
+        <div className="process-timeline">
+          {processSteps.map((step, index) => (
+            <div key={step.step} className="process-step">
+              <div className="step-circle">
+                <span className="step-number">0{step.step}</span>
+              </div>
+              <div className="step-content">
+                <h3>{step.title}</h3>
+                <p>{step.description}</p>
+                <span className="step-duration">{step.duration}</span>
+              </div>
+              {index < processSteps.length - 1 && (
+                <div className="step-connector"></div>
+              )}
+            </div>
+          ))}
         </div>
       </section>
 
       {/* CTA Section */}
       <section className="cta-section">
-        <div className="cta-content" data-aos="zoom-in">
-          <h2>Ready to Start Your Project?</h2>
-          <p>
-            Let's discuss how we can help transform your business with our
-            digital solutions
-          </p>
-          <button
-            className="btn-primary large"
-            onClick={() => setIsModalOpen(true)}
-          >
-            Start Free Consultation
-          </button>
+        <div className="cta-card">
+          <div className="cta-content">
+            <h2>Ready to Bring Your Project to Life?</h2>
+            <p>Let's discuss how I can help you achieve your digital goals.</p>
+            <div className="cta-features">
+              <span>✅ Free initial consultation</span>
+              <span>✅ Detailed project proposal</span>
+              <span>✅ Flexible engagement models</span>
+            </div>
+          </div>
+          <div className="cta-actions">
+            <button
+              className="btn-primary"
+              onClick={() => setIsModalOpen(true)}
+            >
+              Start Conversation
+            </button>
+            <button
+              className="btn-secondary"
+              onClick={() => {
+                const subject = encodeURIComponent('Service Inquiry');
+                window.location.href = `mailto:contact@example.com?subject=${subject}`;
+              }}
+            >
+              Email Directly
+            </button>
+          </div>
         </div>
       </section>
 
@@ -356,84 +312,191 @@ function Services() {
               ×
             </button>
 
-            <div className="modal-header">
-              <h2>Get Your Free Consultation</h2>
-              <p>
-                Fill out the form below and we'll get back to you within 24
-                hours
-              </p>
-            </div>
-
-            <form className="contact-form" onSubmit={handleContactSubmit}>
-              <div className="form-group">
-                <label htmlFor="name">Full Name *</label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  placeholder="Enter your full name"
-                />
+            {selectedService && (
+              <div className="selected-service-header">
+                <span className="service-modal-icon">
+                  {selectedService.icon}
+                </span>
+                <h3>{selectedService.title}</h3>
               </div>
+            )}
 
-              <div className="form-group">
-                <label htmlFor="email">Email Address *</label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  placeholder="Enter your email address"
-                />
-              </div>
+            {/* Multi-step form */}
+            {formStep === 1 && (
+              <>
+                <h2>Get a Quote</h2>
+                <p>
+                  Tell me about your project and I'll provide a detailed
+                  proposal.
+                </p>
 
-              <div className="form-group">
-                <label htmlFor="company">Company</label>
-                <input
-                  type="text"
-                  id="company"
-                  name="company"
-                  placeholder="Enter your company name"
-                />
-              </div>
+                <form className="contact-form" onSubmit={handleContactSubmit}>
+                  <div className="form-group">
+                    <label>Name *</label>
+                    <input
+                      type="text"
+                      name="name"
+                      required
+                      placeholder="Your full name"
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="service">Service Interested In</label>
-                <select
-                  id="service"
-                  name="service"
-                  defaultValue={selectedService?.title || ''}
-                >
-                  <option value="">Select a service</option>
-                  {services.map((service) => (
-                    <option key={service.id} value={service.title}>
-                      {service.title}
-                    </option>
-                  ))}
-                </select>
-              </div>
+                  <div className="form-group">
+                    <label>Email *</label>
+                    <input
+                      type="email"
+                      name="email"
+                      required
+                      placeholder="Your work email"
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label htmlFor="message">Project Details *</label>
-                <textarea
-                  id="message"
-                  name="message"
-                  required
-                  rows="5"
-                  placeholder="Tell us about your project requirements, timeline, and budget..."
-                />
-              </div>
+                  <div className="form-group">
+                    <label>Company</label>
+                    <input
+                      type="text"
+                      name="company"
+                      placeholder="Your company name"
+                    />
+                  </div>
 
-              <button type="submit" className="btn-primary full-width">
-                Send Inquiry
-              </button>
-            </form>
+                  <div className="form-group">
+                    <label>Project Budget</label>
+                    <select name="budget">
+                      <option value="">Select budget range</option>
+                      <option value="1k-5k">$1,000 - $5,000</option>
+                      <option value="5k-15k">$5,000 - $15,000</option>
+                      <option value="15k-30k">$15,000 - $30,000</option>
+                      <option value="30k+">$30,000+</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Project Details *</label>
+                    <textarea
+                      name="details"
+                      required
+                      rows="4"
+                      placeholder="Briefly describe your project requirements, goals, and timeline..."
+                    />
+                  </div>
+
+                  <button type="submit" className="btn-primary full-width">
+                    Next: Review Details →
+                  </button>
+                </form>
+              </>
+            )}
+
+            {formStep === 2 && (
+              <>
+                <h2>Review Your Information</h2>
+                <p>Please review and confirm your details.</p>
+
+                <div className="review-details">
+                  <div className="review-item">
+                    <span>Service:</span>
+                    <strong>{selectedService?.title}</strong>
+                  </div>
+                  <div className="review-item">
+                    <span>Package:</span>
+                    <strong>{selectedService?.price}</strong>
+                  </div>
+                  {/* Form data would be displayed here */}
+                </div>
+
+                <div className="modal-actions">
+                  <button
+                    className="btn-outline"
+                    onClick={() => setFormStep(1)}
+                  >
+                    ← Go Back
+                  </button>
+                  <button
+                    className="btn-primary"
+                    onClick={() => {
+                      // In real app, submit form data
+                      setFormStep(3);
+                    }}
+                  >
+                    Schedule Free Consultation
+                  </button>
+                </div>
+              </>
+            )}
+
+            {formStep === 3 && (
+              <>
+                <h2>Schedule a Demo/Consultation</h2>
+                <p>Choose a time that works best for you.</p>
+
+                <form className="schedule-form" onSubmit={handleScheduleSubmit}>
+                  <div className="form-group">
+                    <label>Preferred Date *</label>
+                    <input type="date" name="date" required />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Preferred Time *</label>
+                    <select name="time" required>
+                      <option value="">Select time slot</option>
+                      <option value="9-10">9:00 AM - 10:00 AM</option>
+                      <option value="10-11">10:00 AM - 11:00 AM</option>
+                      <option value="11-12">11:00 AM - 12:00 PM</option>
+                      <option value="1-2">1:00 PM - 2:00 PM</option>
+                      <option value="2-3">2:00 PM - 3:00 PM</option>
+                      <option value="3-4">3:00 PM - 4:00 PM</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Meeting Type</label>
+                    <select name="meetingType">
+                      <option value="video">
+                        Video Call (Zoom/Google Meet)
+                      </option>
+                      <option value="phone">Phone Call</option>
+                      <option value="in-person">In-Person (If local)</option>
+                    </select>
+                  </div>
+
+                  <div className="form-group">
+                    <label>Additional Notes</label>
+                    <textarea
+                      name="notes"
+                      rows="3"
+                      placeholder="Any specific topics you'd like to discuss..."
+                    />
+                  </div>
+
+                  <div className="modal-actions">
+                    <button
+                      type="button"
+                      className="btn-outline"
+                      onClick={() => setFormStep(2)}
+                    >
+                      ← Back
+                    </button>
+                    <button type="submit" className="btn-primary">
+                      Confirm Schedule
+                    </button>
+                  </div>
+                </form>
+              </>
+            )}
           </div>
         </div>
       )}
 
       {/* Notification */}
-      {notification && <div className="notification">{notification}</div>}
+      {notification && (
+        <div className={`notification ${notification.type}`}>
+          <div className="notification-icon">
+            {notification.type === 'success' ? '✅' : '📧'}
+          </div>
+          <div>{notification.message}</div>
+        </div>
+      )}
     </div>
   );
 }

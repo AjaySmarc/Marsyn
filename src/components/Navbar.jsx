@@ -1,11 +1,14 @@
-import { Link, useLocation } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
+  const dropdownRef = useRef(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -18,19 +21,50 @@ function Navbar() {
 
   useEffect(() => {
     setIsMobileMenuOpen(false);
+    setIsDropdownOpen(false);
   }, [location]);
+
+  // Close dropdown when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+        setIsDropdownOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const navLinks = [
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleDropdownClick = (path) => {
+    navigate(path);
+    setIsDropdownOpen(false);
+    if (isMobileMenuOpen) {
+      setIsMobileMenuOpen(false);
+    }
+  };
+
+  // Main navigation items (prominent)
+  const mainNavLinks = [
     { path: '/', label: 'Home' },
     { path: '/blogs', label: 'Blogs' },
     { path: '/shop', label: 'Shop' },
-    { path: '/services', label: 'Services' },
-    { path: '/about', label: 'About' },
-    { path: '/contact', label: 'Contact' },
+    // { path: '/services', label: 'Services' },
+  ];
+
+  // Dropdown items (secondary)
+  const dropdownItems = [
+    { path: '/SocialMedia', label: 'Online Presence', icon: '🌐' },
+    { path: '/about', label: 'About Me', icon: '👨‍💻' },
+    { path: '/contact', label: 'Contact', icon: '📧' },
   ];
 
   return (
@@ -51,7 +85,8 @@ function Navbar() {
 
         {/* Desktop Navigation */}
         <ul className="nav-links">
-          {navLinks.map((link) => (
+          {/* Main Links */}
+          {mainNavLinks.map((link) => (
             <li key={link.path}>
               <Link
                 to={link.path}
@@ -63,6 +98,44 @@ function Navbar() {
               </Link>
             </li>
           ))}
+
+          {/* Dropdown Container */}
+          <li className="nav-dropdown-container" ref={dropdownRef}>
+            <button
+              className={`nav-link dropdown-toggle ${
+                isDropdownOpen ? 'open' : ''
+              } ${
+                dropdownItems.some((item) => location.pathname === item.path)
+                  ? 'active'
+                  : ''
+              }`}
+              onClick={toggleDropdown}
+              aria-haspopup="true"
+              aria-expanded={isDropdownOpen}
+            >
+              More
+              <span className="dropdown-arrow">⌵</span>
+            </button>
+
+            {/* Dropdown Menu */}
+            {isDropdownOpen && (
+              <div className="dropdown-menu">
+                {dropdownItems.map((item) => (
+                  <Link
+                    key={item.path}
+                    to={item.path}
+                    className={`dropdown-item ${
+                      location.pathname === item.path ? 'active' : ''
+                    }`}
+                    onClick={() => handleDropdownClick(item.path)}
+                  >
+                    <span className="dropdown-icon">{item.icon}</span>
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </li>
         </ul>
 
         {/* Mobile Menu Button */}
@@ -79,8 +152,10 @@ function Navbar() {
 
       {/* Mobile Side Panel */}
       <div className={`mobile-side-panel ${isMobileMenuOpen ? 'active' : ''}`}>
+        {/* Mobile Navigation */}
         <ul className="mobile-nav-links">
-          {navLinks.map((link) => (
+          {/* Main Mobile Links */}
+          {mainNavLinks.map((link) => (
             <li key={link.path}>
               <Link
                 to={link.path}
@@ -93,7 +168,40 @@ function Navbar() {
               </Link>
             </li>
           ))}
+
+          {/* Separator for dropdown items in mobile */}
+          <li className="mobile-divider">
+            <span>More Options</span>
+          </li>
+
+          {/* Dropdown Items in Mobile */}
+          {dropdownItems.map((item) => (
+            <li key={item.path}>
+              <Link
+                to={item.path}
+                className={`mobile-nav-link secondary ${
+                  location.pathname === item.path ? 'active' : ''
+                }`}
+                onClick={toggleMobileMenu}
+              >
+                <span className="mobile-nav-icon">{item.icon}</span>
+                {item.label}
+              </Link>
+            </li>
+          ))}
         </ul>
+
+        {/* Mobile Footer */}
+        <div className="mobile-footer">
+          <p className="mobile-tagline">
+            Digital Solutions • Professional Services
+          </p>
+          <div className="mobile-social-links">
+            <span className="social-dot"></span>
+            <span className="social-dot"></span>
+            <span className="social-dot"></span>
+          </div>
+        </div>
       </div>
 
       {/* Overlay */}

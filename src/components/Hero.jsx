@@ -3,6 +3,7 @@ import './Hero.css';
 import './Navbar.jsx';
 import { useNavigate } from 'react-router-dom';
 import BookDemo from '../pages/BookDemo';
+import { Helmet } from 'react-helmet-async';
 
 const Hero = () => {
   const navigate = useNavigate();
@@ -82,6 +83,13 @@ const Hero = () => {
 
   return (
     <div className="hero-container" ref={heroRef}>
+      <Helmet>
+        <title>Marsyn</title>
+        <meta
+          name="description"
+          content="Boost your business with Marsyn Digital - Expert web development, design, and marketing services tailored for your success."
+        />
+      </Helmet>
       {/* Animated Background */}
       <div className="professional-background">
         <div className="grid-pattern"></div>

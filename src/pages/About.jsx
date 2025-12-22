@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import './About.css';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   const [activeFeature, setActiveFeature] = useState(0);
@@ -45,6 +46,14 @@ const About = () => {
 
   return (
     <div className="about-page" ref={aboutRef}>
+      <Helmet>
+        <title>About Marsyn | AI Workspace & Productivity Platform</title>
+        <meta
+          name="description"
+          content="Learn about Marsyn – your personal AI workspace designed to boost productivity, organize tasks, and collaborate intelligently."
+        />
+      </Helmet>
+
       {/* Animated Background Elements */}
       <div className="cosmic-background">
         <div className="nebula nebula-1"></div>

@@ -263,7 +263,7 @@
 }
 
 .cart-panel {
-  width: 400px;
+  width: 600px;
   height: 100vh;
   background: white;
   display: flex;
@@ -285,7 +285,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 1.5rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #eee;
 }
 
@@ -323,8 +323,8 @@
 .cart-item {
   display: flex;
   align-items: center;
-  gap: 1rem;
-  padding: 1rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #f0f0f0;
   animation: slideInItem 0.3s ease;
 }
@@ -396,7 +396,7 @@
 }
 
 .cart-footer {
-  padding: 1.5rem;
+  padding: 1 rem 1.5rem;
   border-top: 2px solid #f0f0f0;
 }
 
@@ -482,5 +482,187 @@
   
   .add-product-form {
     grid-template-columns: 1fr;
+  }
+}
+
+/* Add these styles to your Shop.css file */
+
+/* Payment Methods */
+.payment-methods {
+  margin-bottom: 1rem;
+  padding: 0.6rem;
+  background: #f8f9fa;
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+}
+
+.payment-methods h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #333;
+  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.payment-methods h3::before {
+  content: '💳';
+}
+
+.payment-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.payment-option {
+  display: grid;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1rem;
+  background: white;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 0.9rem;
+}
+
+.payment-option:hover {
+  border-color: #667eea;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.15);
+}
+
+.payment-option.selected {
+  border-color: #4CAF50;
+  background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+  box-shadow: 0 4px 12px rgba(76, 175, 80, 0.2);
+}
+
+.payment-icon {
+  font-size: 0.8rem;
+}
+
+.payment-selected {
+  text-align: center;
+  padding: 0.8rem;
+  background: linear-gradient(135deg, #4CAF50, #8BC34A);
+  color: white;
+  border-radius: 8px;
+  margin: 0;
+  animation: fadeIn 0.5s ease;
+}
+
+/* API Integration Note */
+.api-integration-note {
+  margin-top: 1rem;
+  padding: 0.8rem;
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  color: #856404;
+}
+
+.api-integration-note code {
+  background: #e9ecef;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-family: monospace;
+}
+
+/* Payment Redirect Info */
+.payment-redirect-info {
+  margin: 1.5rem 0;
+  padding: 1rem;
+  background: #e3f2fd;
+  border-radius: 8px;
+  border-left: 4px solid #2196F3;
+}
+
+.api-note {
+  margin-top: 0.5rem;
+  padding: 0.8rem;
+  background: #f8f9fa;
+  border-radius: 4px;
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #666;
+  border: 1px dashed #ddd;
+}
+
+/* Checkout Button States */
+.checkout-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.checkout-btn:disabled:hover {
+  transform: none;
+  box-shadow: none;
+}
+
+/* Free Checkout Button */
+.checkout-btn.free-checkout {
+  background: linear-gradient(45deg, #FF9800, #FF5722);
+}
+
+/* Paid Checkout Button */
+.checkout-btn.paid-checkout {
+  background: linear-gradient(45deg, #2196F3, #03A9F4);
+}
+
+/* Cart Warning Messages */
+.cart-warning {
+  margin: 1rem 0;
+}
+
+.payment-info {
+  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+  color: #1565c0;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  text-align: center;
+  border-left: 4px solid #2196F3;
+}
+
+.digital-info {
+  background: linear-gradient(135deg, #e8f5e9, #c8e6c9);
+  color: #2e7d32;
+  padding: 0.8rem;
+  border-radius: 8px;
+  margin: 0.5rem 0;
+  text-align: center;
+  border-left: 4px solid #4CAF50;
+}
+
+/* Remove Admin-related styles */
+.admin-panel,
+.admin-toggle,
+.delete-product-btn {
+  display: none;
+}
+
+/* Responsive Payment Options */
+@media (max-width: 100px) {
+  .payment-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  
+ .payment-option {
+  padding: 0.5rem;
+  font-size: 0.75rem;
+  gap: 0.25rem;
+}
+
+  
+  .payment-icon {
+    font-size: 1rem;
   }
 }
