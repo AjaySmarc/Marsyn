@@ -22,15 +22,11 @@ Slowly, I realized:
 If you’re waiting to feel “ready”, stop.
 Record today. Improve tomorrow.
 `,
-    author: 'Ajay',
     date: '2024-02-01',
-    readTime: '10 min read',
     category: 'content',
     tags: ['videos', 'beginners', 'confidence', 'content'],
     image: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?w=500',
     featured: true,
-    likes: 68,
-    comments: 19,
   },
 
   {
@@ -53,15 +49,11 @@ Everything changed.
 If one person learns something from your video, it’s already a success.
 Start ugly. Stay consistent. Learn in public.
 `,
-    author: 'Ajay',
     date: '2024-02-03',
-    readTime: '8 min read',
     category: 'content',
     tags: ['creators', 'mistakes', 'videos'],
     image: 'https://images.unsplash.com/photo-1492724441997-5dc865305da7?w=500',
     featured: false,
-    likes: 51,
-    comments: 11,
   },
 
   {
@@ -84,15 +76,11 @@ If you want to build:
 - Learn to fail fast
 - Learn to stay when excitement dies
 `,
-    author: 'Ajay',
     date: '2024-02-05',
-    readTime: '9 min read',
     category: 'startup',
     tags: ['startup', 'founder', 'lessons'],
     image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=500',
     featured: true,
-    likes: 72,
-    comments: 21,
   },
 
   {
@@ -110,15 +98,11 @@ But it also builds clarity, focus, and resilience.
 If you feel alone — you’re not behind.
 You’re just early.
 `,
-    author: 'Ajay',
     date: '2024-02-07',
-    readTime: '7 min read',
     category: 'startup',
     tags: ['startup', 'mindset', 'founder'],
     image: 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?w=500',
     featured: false,
-    likes: 47,
-    comments: 9,
   },
 
   {
@@ -138,15 +122,11 @@ Start building skills early.
 Learn how to learn.
 That’s the real advantage.
 `,
-    author: 'Ajay',
     date: '2024-02-10',
-    readTime: '8 min read',
     category: 'students',
     tags: ['students', 'career', 'learning'],
     image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=500',
     featured: true,
-    likes: 63,
-    comments: 17,
   },
 
   {
@@ -160,15 +140,11 @@ The difference is not intelligence — it’s persistence.
 Confusion means you’re learning something new.
 Stay curious. Stay patient.
 `,
-    author: 'Ajay',
     date: '2024-02-12',
-    readTime: '6 min read',
     category: 'students',
     tags: ['students', 'mindset'],
     image: 'https://images.unsplash.com/photo-1513258496099-48168024aec0?w=500',
     featured: false,
-    likes: 39,
-    comments: 6,
   },
 
   {
@@ -185,15 +161,11 @@ They showed up every day.
 Consistency builds skill.
 Skill builds confidence.
 `,
-    author: 'Ajay',
     date: '2024-02-14',
-    readTime: '7 min read',
     category: 'content',
     tags: ['consistency', 'content'],
     image: 'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=500',
     featured: false,
-    likes: 44,
-    comments: 8,
   },
 
   {
@@ -206,15 +178,11 @@ It’s not glamorous — it’s demanding.
 
 But if you love building, it’s worth it.
 `,
-    author: 'Ajay',
     date: '2024-02-16',
-    readTime: '8 min read',
     category: 'startup',
     tags: ['founder', 'startup'],
     image: 'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=500',
     featured: false,
-    likes: 52,
-    comments: 12,
   },
 
   {
@@ -227,15 +195,11 @@ You start, then you become ready.
 
 Action creates clarity.
 `,
-    author: 'Ajay',
     date: '2024-02-18',
-    readTime: '5 min read',
     category: 'mindset',
     tags: ['mindset', 'growth'],
     image: 'https://images.unsplash.com/photo-1515169067865-5387ec356754?w=500',
     featured: false,
-    likes: 41,
-    comments: 7,
   },
 
   {
@@ -249,44 +213,11 @@ They need relatability.
 
 I document my journey so others can learn alongside me.
 `,
-    author: 'Ajay',
     date: '2024-02-20',
-    readTime: '6 min read',
     category: 'content',
     tags: ['journey', 'authenticity'],
     image: 'https://images.unsplash.com/photo-1506784983877-45594efa4cbe?w=500',
     featured: true,
-    likes: 58,
-    comments: 14,
   },
 ];
-
 export default blogData;
-
-const categories = [
-  { id: 'all', name: 'All Posts', count: blogData.length },
-  ...Object.values(
-    blogData.reduce((acc, blog) => {
-      const cat = blog.category;
-      if (!acc[cat]) {
-        acc[cat] = {
-          id: cat,
-          name: cat.charAt(0).toUpperCase() + cat.slice(1),
-          count: 1,
-        };
-      } else {
-        acc[cat].count += 1;
-      }
-      return acc;
-    }, {})
-  ),
-];
-
-const popularTags = Array.from(
-  blogData.reduce((set, blog) => {
-    blog.tags.forEach((tag) => set.add(tag));
-    return set;
-  }, new Set())
-);
-
-export { blogData, categories, popularTags };
