@@ -47,15 +47,6 @@ const Hero = () => {
     };
   }, []);
 
-  // const tabs = [
-  //   { id: 'home', label: 'Home', icon: '🏠' },
-  //   { id: 'services', label: 'Services', icon: '⚡' },
-  //   { id: 'blogs', label: 'Blogs', icon: '📝' },
-  //   { id: 'shop', label: 'Shop', icon: '🛒' },
-  //   { id: 'about', label: 'About', icon: '👥' },
-  //   { id: 'contact', label: 'Contact', icon: '📞' },
-  // ];
-
   const services = [
     {
       title: 'Web Development',

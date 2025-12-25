@@ -2,7 +2,7 @@
    Aryantra AI - Theme Styles
    =================================== */
 
-/* Root Variables */
+/* Root Variables - Light Theme (Default) */
 :root {
   /* Colors */
   --primary-purple: #6c5ce7;
@@ -11,16 +11,28 @@
   --accent-blue: #74b9ff;
   --accent-pink: #fd79a8;
   
-  /* Neutrals */
+  /* Neutrals - Light Theme */
   --bg-primary: #f8f9fd;
   --bg-secondary: #ffffff;
+  --bg-tertiary: #f1f3f9;
   --text-primary: #2d3436;
   --text-secondary: #636e72;
+  --text-tertiary: #7f8c8d;
   --text-purple: #6c5ce7;
+  
+  /* Interface Colors */
+  --border-color: rgba(108, 92, 231, 0.15);
+  --border-color-strong: rgba(108, 92, 231, 0.25);
+  --card-bg: #ffffff;
+  --card-bg-hover: #fcfcff;
+  --overlay-bg: rgba(255, 255, 255, 0.9);
   
   /* Gradients */
   --gradient-purple: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-purple-light: linear-gradient(135deg, #a29bfe 0%, #b39ddb 100%);
+  --gradient-blue: linear-gradient(135deg, #74b9ff 0%, #0984e3 100%);
   --gradient-text: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  --gradient-dark: linear-gradient(135deg, #2d3436 0%, #636e72 100%);
   
   /* Spacing */
   --spacing-xs: 0.5rem;
@@ -33,26 +45,74 @@
   --font-primary: 'Space Mono', monospace;
   --font-secondary: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(108, 92, 231, 0.1);
-  --shadow-md: 0 4px 16px rgba(108, 92, 231, 0.15);
-  --shadow-lg: 0 8px 32px rgba(108, 92, 231, 0.2);
+  /* Shadows - Light Theme */
+  --shadow-sm: 0 2px 8px rgba(108, 92, 231, 0.08);
+  --shadow-md: 0 4px 16px rgba(108, 92, 231, 0.12);
+  --shadow-lg: 0 8px 32px rgba(108, 92, 231, 0.16);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.05);
   
   /* Border Radius */
   --radius-sm: 8px;
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-full: 999px;
+  
+  /* Transitions */
+  --transition-fast: 0.15s ease;
+  --transition-normal: 0.3s ease;
+  --transition-slow: 0.5s ease;
 }
 
 /* ===================================
-   Base Styles
+   Dark Theme Variables
+   =================================== */
+[data-theme="dark"] {
+  /* Neutrals - Dark Theme */
+  --bg-primary: #0f0f1e;
+  --bg-secondary: #1a1a2e;
+  --bg-tertiary: #22223b;
+  --text-primary: #e2e8f0;
+  --text-secondary: #a0aec0;
+  --text-tertiary: #718096;
+  --text-purple: #a29bfe;
+  
+  /* Interface Colors - Dark Theme */
+  --border-color: rgba(162, 155, 254, 0.15);
+  --border-color-strong: rgba(162, 155, 254, 0.25);
+  --card-bg: #1a1a2e;
+  --card-bg-hover: #22223b;
+  --overlay-bg: rgba(15, 15, 30, 0.95);
+  
+  /* Shadows - Dark Theme */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+  
+  /* Gradients adjusted for dark theme */
+  --gradient-purple: linear-gradient(135deg, #8a80f2 0%, #9a6dca 100%);
+  --gradient-purple-light: linear-gradient(135deg, #a29bfe 0%, #b39ddb 100%);
+  --gradient-blue: linear-gradient(135deg, #8ac6ff 0%, #2a9df4 100%);
+  --gradient-text: linear-gradient(135deg, #8a80f2 0%, #9a6dca 100%);
+}
+
+/* ===================================
+   Base Styles with Theme Support
    =================================== */
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal),
+              border-color var(--transition-normal),
+              box-shadow var(--transition-normal);
+}
+
+/* Prevent transitions on page load */
+.preload * {
+  transition: none !important;
 }
 
 body {
@@ -61,9 +121,10 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  min-height: 100vh;
 }
 
-/* Background Decorations */
+/* Background Decorations - Theme Aware */
 body::before,
 body::after {
   content: '';
@@ -72,6 +133,7 @@ body::after {
   opacity: 0.4;
   z-index: -1;
   filter: blur(80px);
+  transition: opacity var(--transition-normal), background var(--transition-normal);
 }
 
 body::before {
@@ -90,42 +152,18 @@ body::after {
   left: 5%;
 }
 
-/* ===================================
-   Typography
-   =================================== */
-
-h1, h2, h3, h4, h5, h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  margin-bottom: var(--spacing-sm);
+[data-theme="dark"] body::before {
+  background: rgba(162, 155, 254, 0.1);
+  opacity: 0.3;
 }
 
-h1 {
-  font-size: clamp(2.5rem, 8vw, 5.5rem);
-  font-weight: 900;
-}
-
-h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-}
-
-h3 {
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
-}
-
-.gradient-text {
-  background: var(--gradient-text);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.mono-text {
-  font-family: var(--font-primary);
+[data-theme="dark"] body::after {
+  background: rgba(116, 185, 255, 0.1);
+  opacity: 0.3;
 }
 
 /* ===================================
-   Navigation
+   Navigation - Theme Support
    =================================== */
 
 nav {
@@ -133,12 +171,14 @@ nav {
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-md) var(--spacing-lg);
-  background: rgba(255, 255, 255, 0.8);
+  background: var(--overlay-bg);
   backdrop-filter: blur(10px);
   position: sticky;
   top: 0;
   z-index: 1000;
-  border-bottom: 1px solid rgba(108, 92, 231, 0.1);
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--transition-normal), 
+              border-color var(--transition-normal);
 }
 
 .logo {
@@ -150,12 +190,14 @@ nav {
   font-weight: 700;
   color: var(--text-primary);
   text-decoration: none;
+  transition: color var(--transition-normal);
 }
 
 .logo svg {
   width: 32px;
   height: 32px;
   color: var(--primary-purple);
+  transition: color var(--transition-normal);
 }
 
 nav ul {
@@ -169,7 +211,7 @@ nav a {
   text-decoration: none;
   color: var(--text-secondary);
   font-weight: 500;
-  transition: color 0.3s ease;
+  transition: color var(--transition-normal);
   position: relative;
 }
 
@@ -189,10 +231,64 @@ nav a.active::after {
   width: 100%;
   height: 2px;
   background: var(--primary-purple);
+  transition: background var(--transition-normal);
 }
 
 /* ===================================
-   Buttons
+   Theme Toggle Button
+   =================================== */
+
+.theme-toggle {
+  background: var(--bg-tertiary);
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius-full);
+  width: 60px;
+  height: 32px;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all var(--transition-normal);
+  overflow: hidden;
+}
+
+.theme-toggle:hover {
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-color-strong);
+}
+
+.theme-toggle:active {
+  transform: scale(0.95);
+}
+
+.theme-toggle-icon {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  transition: transform var(--transition-normal) cubic-bezier(0.68, -0.55, 0.27, 1.55),
+              opacity var(--transition-normal);
+}
+
+.theme-toggle-icon::before {
+  content: '🌙';
+}
+
+[data-theme="dark"] .theme-toggle-icon::before {
+  content: '☀️';
+}
+
+[data-theme="dark"] .theme-toggle-icon {
+  transform: rotate(360deg);
+}
+
+/* ===================================
+   Buttons - Theme Support
    =================================== */
 
 .btn {
@@ -202,7 +298,7 @@ nav a.active::after {
   font-weight: 600;
   font-size: 1rem;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--transition-normal);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -214,11 +310,28 @@ nav a.active::after {
   background: var(--gradient-purple);
   color: white;
   box-shadow: var(--shadow-md);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s ease;
 }
 
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.btn-primary:hover::before {
+  left: 100%;
 }
 
 .btn-secondary {
@@ -231,10 +344,48 @@ nav a.active::after {
   background: var(--primary-purple);
   color: white;
   transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Dark theme button adjustments */
+[data-theme="dark"] .btn-secondary {
+  border-color: var(--primary-purple-light);
+  color: var(--primary-purple-light);
+}
+
+[data-theme="dark"] .btn-secondary:hover {
+  background: var(--primary-purple-light);
+  color: var(--bg-secondary);
 }
 
 /* ===================================
-   Hero Section
+   Cards & Containers - Theme Support
+   =================================== */
+
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-normal);
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--border-color-strong);
+  background: var(--card-bg-hover);
+  transform: translateY(-2px);
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-md);
+}
+
+/* ===================================
+   Hero Section - Theme Support
    =================================== */
 
 .hero {
@@ -254,39 +405,22 @@ nav a.active::after {
   gap: var(--spacing-xs);
   padding: var(--spacing-xs) var(--spacing-md);
   background: rgba(108, 92, 231, 0.1);
-  border: 1px solid rgba(108, 92, 231, 0.2);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-full);
   color: var(--text-purple);
   font-family: var(--font-primary);
   font-size: 0.875rem;
   margin-bottom: var(--spacing-md);
   animation: float 3s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  transition: background var(--transition-normal),
+              border-color var(--transition-normal),
+              color var(--transition-normal);
 }
 
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
-}
-
-.hero h1 {
-  max-width: 1200px;
-  margin-bottom: var(--spacing-md);
-  animation: fadeInUp 0.8s ease-out;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+[data-theme="dark"] .hero-badge {
+  background: rgba(162, 155, 254, 0.1);
+  border-color: rgba(162, 155, 254, 0.2);
 }
 
 .hero-subtitle {
@@ -294,7 +428,7 @@ nav a.active::after {
   color: var(--text-purple);
   font-weight: 600;
   margin-bottom: var(--spacing-sm);
-  animation: fadeInUp 0.8s ease-out 0.2s backwards;
+  transition: color var(--transition-normal);
 }
 
 .hero-description {
@@ -303,19 +437,11 @@ nav a.active::after {
   max-width: 800px;
   margin: 0 auto var(--spacing-lg);
   line-height: 1.8;
-  animation: fadeInUp 0.8s ease-out 0.4s backwards;
-}
-
-.hero-cta {
-  display: flex;
-  gap: var(--spacing-md);
-  flex-wrap: wrap;
-  justify-content: center;
-  animation: fadeInUp 0.8s ease-out 0.6s backwards;
+  transition: color var(--transition-normal);
 }
 
 /* ===================================
-   Floating Elements
+   Floating Elements - Theme Support
    =================================== */
 
 .floating-orb {
@@ -324,6 +450,12 @@ nav a.active::after {
   background: radial-gradient(circle, rgba(108, 92, 231, 0.4), transparent);
   animation: floatOrb 6s ease-in-out infinite;
   pointer-events: none;
+  transition: background var(--transition-normal);
+}
+
+[data-theme="dark"] .floating-orb {
+  background: radial-gradient(circle, rgba(162, 155, 254, 0.2), transparent);
+  opacity: 0.8;
 }
 
 .floating-orb:nth-child(1) {
@@ -362,6 +494,84 @@ nav a.active::after {
 }
 
 /* ===================================
+   Form Elements - Theme Support
+   =================================== */
+
+input, textarea, select {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  padding: 0.75rem 1rem;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-secondary);
+  transition: all var(--transition-normal);
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary-purple);
+  box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.1);
+}
+
+[data-theme="dark"] input:focus,
+[data-theme="dark"] textarea:focus,
+[data-theme="dark"] select:focus {
+  box-shadow: 0 0 0 3px rgba(162, 155, 254, 0.2);
+}
+
+/* ===================================
+   Tables - Theme Support
+   =================================== */
+
+table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+}
+
+th, td {
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border-color);
+  transition: background var(--transition-normal),
+              color var(--transition-normal);
+}
+
+th {
+  background: var(--bg-tertiary);
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+tr:hover td {
+  background: var(--card-bg-hover);
+}
+
+/* ===================================
+   Code Blocks - Theme Support
+   =================================== */
+
+code, pre {
+  font-family: var(--font-primary);
+  background: var(--bg-tertiary);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9em;
+  transition: all var(--transition-normal);
+}
+
+pre {
+  padding: 1rem;
+  overflow-x: auto;
+  margin: var(--spacing-md) 0;
+}
+
+/* ===================================
    Responsive Design
    =================================== */
 
@@ -387,17 +597,16 @@ nav a.active::after {
     width: 100%;
     justify-content: center;
   }
+  
+  .theme-toggle {
+    width: 56px;
+    height: 30px;
+  }
 }
 
 /* ===================================
    Utility Classes
    =================================== */
-
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 var(--spacing-md);
-}
 
 .text-center {
   text-align: center;
@@ -410,3 +619,69 @@ nav a.active::after {
 .mb-lg {
   margin-bottom: var(--spacing-lg);
 }
+
+.mono-text {
+  font-family: var(--font-primary);
+}
+
+.gradient-text {
+  background: var(--gradient-text);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Smooth theme transition wrapper */
+.theme-transition {
+  transition: background-color var(--transition-normal),
+              color var(--transition-normal),
+              border-color var(--transition-normal),
+              box-shadow var(--transition-normal);
+}
+
+/* Loading state */
+.loading {
+  opacity: 0.7;
+  pointer-events: none;
+}
+
+/* Focus styles for accessibility */
+:focus-visible {
+  outline: 2px solid var(--primary-purple);
+  outline-offset: 2px;
+}
+
+/* Selection color */
+::selection {
+  background-color: rgba(108, 92, 231, 0.3);
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] ::selection {
+  background-color: rgba(162, 155, 254, 0.3);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--bg-tertiary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: var(--radius-full);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--border-color-strong);
+}
+
+/* Animation delays for staggered animations */
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-400 { animation-delay: 0.4s; }
+.delay-500 { animation-delay: 0.5s; }

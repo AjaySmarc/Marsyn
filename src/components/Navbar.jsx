@@ -1,6 +1,8 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
 import './Navbar.css';
+import ThemeToggle from './ThemeToggle';
+// import { useTheme } from '../context/ThemeContext';
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -9,6 +11,7 @@ function Navbar() {
   const location = useLocation();
   const navigate = useNavigate();
   const dropdownRef = useRef(null);
+  // const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -137,6 +140,9 @@ function Navbar() {
             )}
           </li>
         </ul>
+
+        <ThemeToggle />
+        
 
         {/* Mobile Menu Button */}
         <button
